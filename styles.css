@@ -1,0 +1,401 @@
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+body { 
+  font-family: 'Roboto', sans-serif; 
+  background: #f9f9f9; 
+  color: #333; 
+  padding: 20px; 
+}
+
+/* Language Popup Styles */
+.language-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.language-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.language-content h2 {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.bangla-subtitle {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #555;
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.language-options {
+  display: flex;
+  justify-content: space-around;
+}
+
+.language-options button {
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.language-options button:hover {
+  background-color: #0056b3;
+}
+
+/* Hide elements initially for language switch */
+.hidden-lang {
+  display: none;
+}
+
+/* PDF Report Styles */
+#pdfReport {
+  background-color: white;
+  font-family: 'Roboto', sans-serif;
+}
+
+#pdfReportTitle {
+  color: #333;
+  border-bottom: 2px solid #333;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+#pdfReportContent table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#pdfReportContent th, 
+#pdfReportContent td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+#pdfReportContent th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+#pdfReportContent h2 {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+}
+
+#pdfReportContent ul {
+  margin-left: 20px;
+}
+
+#pdfReportContent li {
+  margin-bottom: 5px;
+}
+
+header { 
+  text-align: center; 
+  margin-bottom: 2rem; 
+}
+
+.rainbow-text {
+  font-size: 2rem; 
+  font-weight: 700;
+  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
+  background-size: 1400% 1400%;
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent;
+  animation: rainbow 5s ease infinite;
+}
+
+@keyframes rainbow { 
+  0% {background-position:0% 50%} 
+  50% {background-position:100% 50%} 
+  100% {background-position:0% 50%} 
+}
+
+.subtitle { 
+  text-decoration: underline; 
+  font-size: 1.2rem; 
+  margin-top: 0.5rem; 
+}
+
+.intro {
+  max-width: 700px;
+  margin: 1rem auto;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.intro ol {
+  list-style-position: inside;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+form { 
+  max-width: 700px; 
+  margin: auto; 
+  background: #fff; 
+  padding: 1.5rem; 
+  border-radius: 10px; 
+  box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+}
+
+.question { 
+  margin-bottom: 1rem; 
+}
+
+/* Female-specific questions styling */
+.female-questions {
+  background-color: #f9f0ff;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #c27fd3;
+  border-radius: 6px;
+}
+
+.female-questions .question:last-child {
+  margin-bottom: 0;
+}
+
+.question p { 
+  font-weight: bold; 
+  margin-bottom: 0.2rem; 
+}
+
+.note { 
+  font-size: 0.9rem; 
+  font-style: italic; 
+  margin: 0 0 0.3rem 0; 
+  color: #555; 
+}
+
+.options { 
+  margin-left: 1rem; 
+}
+
+.options label { 
+  display: flex; 
+  align-items: center; 
+  margin-bottom: 0.3rem; 
+}
+
+.options input { 
+  margin-right: 8px; 
+}
+
+.bmi-inputs { 
+  display: flex; 
+  gap: 1rem; 
+  margin-bottom: 0.5rem; 
+}
+
+.bmi-inputs input { 
+  width: 100%; 
+  padding: 0.5rem; 
+}
+
+#bmiResult { 
+  margin-top: 0.5rem; 
+  font-weight: bold; 
+}
+
+.bmi-comment { 
+  font-size: 0.85rem; 
+  margin-top: 0.3rem; 
+  color: #555; 
+  white-space: pre-line; 
+}
+
+.buttons { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 1rem; 
+  margin-top: 1rem; 
+}
+
+.buttons button { 
+  padding: 0.6rem 1.2rem; 
+  border: none; 
+  border-radius: 6px; 
+  font-size: 1rem; 
+  background: #007BFF; 
+  color: #fff; 
+  cursor: pointer; 
+}
+
+.buttons button:hover { 
+  background: #0056b3; 
+}
+
+.result-container { 
+  display: none; 
+  margin-top: 2rem; 
+  background: #ffeb3b; 
+  padding: 2rem; 
+  border-radius: 10px; 
+  text-align: center; 
+}
+
+.result-score { 
+  font-size: 5rem; 
+  font-weight: 700; 
+  margin-bottom: 0.5rem; 
+}
+
+.result-text { 
+  font-size: 1.5rem; 
+  font-weight: 700; 
+  margin-bottom: 1rem; 
+}
+
+.result-desc { 
+  font-size: 1rem; 
+  margin-bottom: 1.5rem; 
+  line-height: 1.4; 
+}
+
+.see-tips { 
+  padding: 0.8rem 1.5rem; 
+  background: #333; 
+  color: #fff; 
+  border: none; 
+  border-radius: 6px; 
+  cursor: pointer; 
+}
+
+.see-tips:hover { 
+  background: #000; 
+}
+
+.tips-list { 
+  display: none; 
+  margin-top: 1rem; 
+  background: #fff; 
+  padding: 1rem; 
+  border-radius: 8px; 
+}
+
+.tips-list ul { 
+  list-style: disc inside; 
+  padding-left: 1.2rem; 
+}
+
+.tips-list li { 
+  margin-bottom: 0.5rem; 
+}
+
+.developer-signature {
+  position: fixed; 
+  bottom: 10px; 
+  right: 10px; 
+  background: rgba(255, 255, 255, 0.8); 
+  padding: 5px 10px; 
+  border-radius: 20px; 
+  font-size: 0.8rem; 
+  display: flex; 
+  align-items: center; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.developer-signature span {
+  margin-right: 5px;
+}
+
+@media (max-width: 600px) { 
+  .bmi-inputs { 
+    flex-direction: column; 
+  } 
+  
+  .buttons { 
+    flex-direction: column; 
+  } 
+} 
+
+/* Symptom questions styling */
+.symptom-questions {
+  background-color: #f0f9ff;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #7fc2d3;
+  border-radius: 6px;
+}
+
+.symptom-questions .question:last-child {
+  margin-bottom: 0;
+}
+
+/* Acknowledgement checkbox styling */
+.acknowledgement-container {
+  max-width: 700px;
+  margin: 0 auto 20px auto;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.acknowledge-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.acknowledge-label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.custom-checkbox {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: center;
+  color: #999;
+  transition: color 0.3s;
+}
+
+.acknowledge-label input[type="checkbox"]:checked ~ .custom-checkbox {
+  color: #007BFF;
+  content: "✓";
+}
+
+.acknowledge-label input[type="checkbox"]:checked ~ .custom-checkbox::before {
+  content: "✓";
+  position: absolute;
+  left: 2px;
+  top: 0px;
+  color: #007BFF;
+  font-size: 16px;
+} 

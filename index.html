@@ -1,0 +1,254 @@
+<!-- Full HTML with vegetable/fruit question added above BMI -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Type 2 Diabetes Risk Checker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <!-- Only use one version of jsPDF to avoid conflicts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Language Selection Popup -->
+  <div id="language-popup" class="language-popup">
+    <div class="language-content">
+      <h2>Please Select Your Language</h2>
+      <p class="bangla-subtitle">(অনুগ্রহ করে আপনার ভাষা নির্বাচন করুন)</p>
+      <div class="language-options">
+        <button onclick="setLanguage('bn')">বাংলা</button>
+        <button onclick="setLanguage('en')">English</button>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="rainbow-text" data-en="Type 2 Diabetes Risk Checker" data-bn="টাইপ ২ ডায়াবেটিস রিস্ক চেকার">Type 2 Diabetes Risk Checker</div>
+    <div class="subtitle" data-en="Diabetes Risk Questionnaire" data-bn="ডায়াবেটিস রিস্ক প্রশ্নাবলী">Diabetes Risk Questionnaire</div>
+    <div class="intro">
+      <p><strong data-en="General Information:" data-bn="সাধারণ তথ্য:">General Information:</strong></p>
+      <ol>
+        <li data-en="Diabetes is a manageable condition, but left untreated, it can cause serious harm." data-bn="ডায়াবেটিস একটি নিয়ন্ত্রণযোগ্য অবস্থা, কিন্তু চিকিৎসা না করালে এটি গুরুতর ক্ষতি করতে পারে।">Diabetes is a manageable condition, but left untreated, it can cause serious harm.</li>
+        <li data-en="This is not a medical diagnostic procedure for diabetes. However, it can help you understand your risk and develop a healthier lifestyle." data-bn="এটি ডায়াবেটিস নির্ণয়ের কোনো চিকিৎসাগত নির্ণয় পদ্ধতি নয়। তবে এটি আপনার ঝুঁকি বোঝাতে এবং একটি সুস্থ জীবনযাপন গড়ে তুলতে সহায়তা করতে পারে।">This is not a medical diagnostic procedure for diabetes. However, it can help you understand your risk and develop a healthier lifestyle.</li>
+        <li data-en="Please answer the questions below honestly and completely to know your risk level." data-bn="আপনার ঝুঁকির মাত্রা জানতে নিচের প্রশ্নগুলির সৎভাবে এবং সম্পূর্ণভাবে উত্তর দিন।">Please answer the questions below honestly and completely to know your risk level.</li>
+      </ol>
+    </div>
+  </header>
+
+  <div class="acknowledgement-container">
+    <label class="acknowledge-label">
+      <input type="checkbox" id="acknowledgeInfo" name="acknowledgeInfo" onchange="toggleFormVisibility()">
+      <span class="custom-checkbox">○</span>
+      <span data-en="I have read and understood the general information above." data-bn="আমি উপরের সাধারণ তথ্য পড়েছি এবং বুঝেছি।">I have read and understood the general information above.</span>
+    </label>
+  </div>
+
+  <form id="riskForm" style="display: none;">
+    <div class="question">
+      <p data-en="Are you taking this test for yourself or for a loved one?" data-bn="আপনি কি এই পরীক্ষা নিজের জন্য করছেন নাকি আপনার কোন প্রিয়জনের জন্য?">Are you taking this test for yourself or for a loved one?</p>
+      <div class="options">
+        <label><input type="radio" name="who" value="self" required onclick="toggleNameField()"><span data-en="For Myself" data-bn="নিজের জন্য">For Myself</span></label>
+        <label><input type="radio" name="who" value="other" onclick="toggleNameField()"><span data-en="For Someone Else" data-bn="অন্য কারো জন্য">For Someone Else</span></label>
+      </div>
+      <div id="nameField" style="display: none; margin-top: 10px;">
+        <input type="text" id="otherPersonName" placeholder="Enter Your Name (Optional)" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+      </div>
+    </div>
+    <div class="question">
+      <p data-en="Gender" data-bn="লিঙ্গ">Gender</p>
+      <div class="note" data-en="(Males are at higher risk for developing type 2 diabetes)" data-bn="(পুরুষদের টাইপ ২ ডায়াবেটিস হওয়ার ঝুঁকি বেশি)">(Males are at higher risk for developing type 2 diabetes)</div>
+      <div class="options">
+        <label><input type="radio" name="gender" value="male" required onclick="toggleFemaleQuestions('hide')"><span data-en="Male" data-bn="পুরুষ">Male</span></label>
+        <label><input type="radio" name="gender" value="female" onclick="toggleFemaleQuestions('show')"><span data-en="Female" data-bn="মহিলা">Female</span></label>
+      </div>
+    </div>
+    
+    <!-- Female-specific questions (initially hidden) -->
+    <div id="femaleQuestions" class="female-questions" style="display: none;">
+      <div class="question">
+        <p data-en="Was there a history of diabetes during any pregnancy?" data-bn="কোন গর্ভাবস্থায় কি ডায়াবেটিসের ইতিহাস ছিল?">Was there a history of diabetes during any pregnancy?</p>
+        <div class="note" data-en="(Gestational diabetes increases the risk of developing type 2 diabetes)" data-bn="(গর্ভকালীন ডায়াবেটিস টাইপ ২ ডায়াবেটিস হওয়ার ঝুঁকি বাড়ায়)">(Gestational diabetes increases the risk of developing type 2 diabetes)</div>
+        <div class="options">
+          <label><input type="radio" name="gestational" value="yes"><span data-en="Yes" data-bn="হ্যাঁ">Yes</span></label>
+          <label><input type="radio" name="gestational" value="no"><span data-en="No" data-bn="না">No</span></label>
+        </div>
+      </div>
+      
+      <div class="question">
+        <p data-en="Was a baby ever delivered with a weight exceeding 4.1 kg?" data-bn="কখনও কি ৪.১ কেজির বেশি ওজনের শিশু প্রসব করেছেন?">Was a baby ever delivered with a weight exceeding 4.1 kg?</p>
+        <div class="note" data-en="(Having a baby with high birth weight can be an indicator of gestational diabetes)" data-bn="(অধিক ওজনের শিশু প্রসব গর্ভকালীন ডায়াবেটিসের একটি সূচক হতে পারে)">(Having a baby with high birth weight can be an indicator of gestational diabetes)</div>
+        <div class="options">
+          <label><input type="radio" name="babyWeight" value="yes"><span data-en="Yes" data-bn="হ্যাঁ">Yes</span></label>
+          <label><input type="radio" name="babyWeight" value="no"><span data-en="No" data-bn="না">No</span></label>
+        </div>
+      </div>
+    </div>
+    
+    <div class="question">
+      <p data-en="Age" data-bn="বয়স">Age</p>
+      <div class="note" data-en="(The older you are, the higher your risk)" data-bn="(আপনার বয়স যত বেশি, ঝুঁকি তত বেশি)">(The older you are, the higher your risk)</div>
+      <div class="options">
+        <label><input type="radio" name="age" value="lt40" required><span data-en="Less than 40 Years" data-bn="৪০ বছরের কম">Less than 40 Years</span></label>
+        <label><input type="radio" name="age" value="40-49"><span data-en="40–49 Years" data-bn="৪০-৪৯ বছর">40–49 Years</span></label>
+        <label><input type="radio" name="age" value="50-59"><span data-en="50–59 Years" data-bn="৫০-৫৯ বছর">50–59 Years</span></label>
+        <label><input type="radio" name="age" value="60+"><span data-en="60 Years or Older" data-bn="৬০ বছর বা তার বেশি">60 Years or Older</span></label>
+      </div>
+    </div>
+    <div class="question">
+      <p data-en="Family History of Diabetes" data-bn="পরিবারে ডায়াবেটিসের ইতিহাস">Family History of Diabetes</p>
+      <div class="note" data-en="(A family history of diabetes could contribute to your risk)" data-bn="(পরিবারে ডায়াবেটিসের ইতিহাস আপনার ঝুঁকিতে অবদান রাখতে পারে)">(A family history of diabetes could contribute to your risk)</div>
+      <div class="options">
+        <label><input type="radio" name="family" value="yes" required><span data-en="Yes" data-bn="হ্যাঁ">Yes</span></label>
+        <label><input type="radio" name="family" value="no"><span data-en="No" data-bn="না">No</span></label>
+      </div>
+    </div>
+    <div class="question">
+      <p data-en="Blood Pressure" data-bn="রক্তচাপ">Blood Pressure</p>
+      <div class="note" data-en="(Having high blood pressure contributes to your risk)" data-bn="(উচ্চ রক্তচাপ আপনার ঝুঁকিতে অবদান রাখে)">(Having high blood pressure contributes to your risk)</div>
+      <div class="options">
+        <label><input type="radio" name="bp" value="low" required><span data-en="Low" data-bn="কম">Low</span></label>
+        <label><input type="radio" name="bp" value="normal"><span data-en="Normal" data-bn="স্বাভাবিক">Normal</span></label>
+        <label><input type="radio" name="bp" value="high"><span data-en="High" data-bn="বেশি">High</span></label>
+        <label><input type="radio" name="bp" value="unknown"><span data-en="I do not know" data-bn="আমি জানি না">I do not know</span></label>
+      </div>
+    </div>
+    <div class="question">
+      <p data-en="Physical Activity" data-bn="শারীরিক কার্যকলাপ">Physical Activity</p>
+      <div class="note" data-en="(Being inactive can increase your risk)" data-bn="(নিষ্ক্রিয় থাকলে আপনার ঝুঁকি বাড়তে পারে)">(Being inactive can increase your risk)</div>
+      <div class="options">
+        <label><input type="radio" name="activity" value="yes" required><span data-en="Yes, I do 30+ mins/day" data-bn="হ্যাঁ, আমি প্রতিদিন ৩০+ মিনিট করি">Yes, I do 30+ mins/day</span></label>
+        <label><input type="radio" name="activity" value="no"><span data-en="No" data-bn="না">No</span></label>
+      </div>
+    </div>
+
+    <!-- New Question: Fruit and Veg -->
+    <div class="question">
+      <p data-en="How frequently do you consume vegetables or fruits?" data-bn="আপনি কতটা ঘন ঘন শাকসবজি বা ফল খান?">How frequently do you consume vegetables or fruits?</p>
+      <div class="note" data-en="(Regular consumption of veggies and fruits may lower Type 2 diabetes risk)" data-bn="(নিয়মিত শাকসবজি এবং ফল খাওয়া টাইপ ২ ডায়াবেটিস হওয়ার ঝুঁকি কমাতে সাহায্য করতে পারে)">(Regular consumption of veggies and fruits may lower Type 2 diabetes risk)</div>
+      <div class="options">
+        <label><input type="radio" name="vegfruit" value="daily" required><span data-en="I eat vegetables or fruits every day" data-bn="আমি প্রতিদিন শাকসবজি বা ফল খাই">I eat vegetables or fruits every day</span></label>
+        <label><input type="radio" name="vegfruit" value="notdaily"><span data-en="I do not eat vegetables or fruits every day" data-bn="আমি প্রতিদিন শাকসবজি বা ফল খাই না">I do not eat vegetables or fruits every day</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p data-en="BMI" data-bn="বিএমআই">BMI</p>
+      <div class="note" data-en="(People with higher BMI are at higher risk)" data-bn="(যাদের বিএমআই বেশি তাদের ঝুঁকি বেশি)">(People with higher BMI are at higher risk)</div>
+      <div class="bmi-inputs">
+        <input type="number" id="heightFeet" placeholder="Height (feet)" data-bn-placeholder="উচ্চতা (ফুট)" required oninput="calculateBMI()">
+        <input type="number" id="heightInches" placeholder="Height (inches)" data-bn-placeholder="উচ্চতা (ইঞ্চি)" required oninput="calculateBMI()">
+        <input type="number" id="weightKg" placeholder="Weight (kg)" data-bn-placeholder="ওজন (কেজি)" required oninput="calculateBMI()">
+      </div>
+      <div id="bmiResult"></div>
+      <div class="bmi-comment">
+        <span data-en="According to WHO, BMI categories:" data-bn="WHO অনুযায়ী, BMI বিভাগসমূহ:">According to WHO, BMI categories:</span>
+        <span data-en="Below 18.5 = Underweight" data-bn="১৮.৫ এর নিচে = কম ওজন">Below 18.5 = Underweight</span>  
+        <span data-en="18.5–24.9 = Normal" data-bn="১৮.৫–২৪.৯ = স্বাভাবিক">18.5–24.9 = Normal</span>  
+        <span data-en="25.0–29.9 = Overweight/Pre-obese" data-bn="২৫.০–২৯.৯ = অতিরিক্ত ওজন/পূর্ব-স্থূলতা">25.0–29.9 = Overweight/Pre-obese</span>  
+        <span data-en="30.0 and over = Obese" data-bn="৩০.০ এবং তার বেশি = স্থূলতা">30.0 and over = Obese</span>
+      </div>
+    </div>
+
+    <div class="question">
+      <p data-en="Do you smoke or use any tobacco products?" data-bn="আপনি কি ধূমপান করেন বা কোন তামাক জাতীয় দ্রব্য ব্যবহার করেন?">Do you smoke or use any tobacco products?</p>
+      <div class="note" data-en="(Tobacco consumption is a risk factor for type 2 diabetes)" data-bn="(তামাক সেবন টাইপ ২ ডায়াবেটিসের একটি ঝুঁকির কারণ)">(Tobacco consumption is a risk factor for type 2 diabetes)</div>
+      <div class="options">
+        <label><input type="radio" name="smoke" value="yes" required><span data-en="Yes" data-bn="হ্যাঁ">Yes</span></label>
+        <label><input type="radio" name="smoke" value="no"><span data-en="No" data-bn="না">No</span></label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p data-en="Do you have any additional symptoms?" data-bn="আপনার কি কোন অতিরিক্ত উপসর্গ আছে?">Do you have any additional symptoms?</p>
+      <div class="note" data-en="(The more information you provide, the more accurate your results will be)" data-bn="(আপনি যত বেশি তথ্য প্রদান করবেন, আপনার ফলাফল তত বেশি সঠিক হবে)">(The more information you provide, the more accurate your results will be)</div>
+      <div class="options">
+        <label><input type="radio" name="hasSymptoms" value="yes" required onclick="toggleSymptomQuestions('show')"><span data-en="Yes" data-bn="হ্যাঁ">Yes</span></label>
+        <label><input type="radio" name="hasSymptoms" value="no" onclick="toggleSymptomQuestions('hide')"><span data-en="No" data-bn="না">No</span></label>
+      </div>
+    </div>
+
+    <!-- Symptom questions (initially hidden) -->
+    <div id="symptomQuestions" class="symptom-questions" style="display: none;">
+      <div class="question">
+        <p data-en="Do you frequently feel the need to urinate?" data-bn="আপনি কি ঘন ঘন প্রস্রাব করার প্রয়োজন অনুভব করেন?">Do you frequently feel the need to urinate?</p>
+        <div class="options">
+          <label><input type="radio" name="frequentUrination" value="yes"><span data-en="Yes" data-bn="হ্যাঁ">Yes</span></label>
+          <label><input type="radio" name="frequentUrination" value="no"><span data-en="No" data-bn="না">No</span></label>
+        </div>
+      </div>
+
+      <div class="question">
+        <p data-en="Do you often feel excessively thirsty?" data-bn="আপনি কি প্রায়ই অত্যধিক তৃষ্ণার্ত বোধ করেন?">Do you often feel excessively thirsty?</p>
+        <div class="options">
+          <label><input type="radio" name="excessiveThirst" value="yes"><span data-en="Yes" data-bn="হ্যাঁ">Yes</span></label>
+          <label><input type="radio" name="excessiveThirst" value="no"><span data-en="No" data-bn="না">No</span></label>
+        </div>
+      </div>
+
+      <div class="question">
+        <p data-en="Have you noticed unexplained weight loss?" data-bn="আপনার কি অজানা কারণে ওজন কমে যাচ্ছে?">Have you noticed unexplained weight loss?</p>
+        <div class="options">
+          <label><input type="radio" name="weightLoss" value="yes"><span data-en="Yes" data-bn="হ্যাঁ">Yes</span></label>
+          <label><input type="radio" name="weightLoss" value="no"><span data-en="No" data-bn="না">No</span></label>
+        </div>
+      </div>
+
+      <div class="question">
+        <p data-en="Are you experiencing blurred vision?" data-bn="আপনি কি ঝাপসা দৃষ্টি অনুভব করছেন?">Are you experiencing blurred vision?</p>
+        <div class="options">
+          <label><input type="radio" name="blurredVision" value="yes"><span data-en="Yes" data-bn="হ্যাঁ">Yes</span></label>
+          <label><input type="radio" name="blurredVision" value="no"><span data-en="No" data-bn="না">No</span></label>
+        </div>
+      </div>
+
+      <div class="question">
+        <p data-en="Do your wounds heal slowly, or do you experience frequent infections?" data-bn="আপনার ক্ষত কি ধীরে ধীরে সারে, বা আপনি কি ঘন ঘন সংক্রমণ অনুভব করেন?">Do your wounds heal slowly, or do you experience frequent infections?</p>
+        <div class="options">
+          <label><input type="radio" name="slowHealing" value="yes"><span data-en="Yes" data-bn="হ্যাঁ">Yes</span></label>
+          <label><input type="radio" name="slowHealing" value="no"><span data-en="No" data-bn="না">No</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button type="button" onclick="showResult()" data-en="Check Your Result Online" data-bn="অনলাইনে আপনার ফলাফল দেখুন">Check Your Result Online</button>
+      <button type="button" onclick="downloadPDF()" data-en="Save Report as PDF" data-bn="পিডিএফ হিসাবে রিপোর্ট সংরক্ষণ করুন">Save Report as PDF</button>
+    </div>
+  </form>
+
+  <div class="result-container" id="resultContainer">
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-text" id="resultText"></div>
+    <div class="result-desc" id="resultDesc"></div>
+    <button class="see-tips" onclick="toggleTips()" data-en="SEE GENERAL TIPS" data-bn="সাধারণ টিপস দেখুন">SEE GENERAL TIPS</button>
+    <div class="tips-list" id="tipsList">
+      <ul>
+        <li data-en="Monitor blood pressure and glucose." data-bn="রক্তচাপ এবং রক্তে শর্করার মাত্রা পর্যবেক্ষণ করুন।">Monitor blood pressure and glucose.</li>
+        <li data-en="Exercise at least 30 minutes daily." data-bn="প্রতিদিন কমপক্ষে ৩০ মিনিট ব্যায়াম করুন।">Exercise at least 30 minutes daily.</li>
+        <li data-en="Maintain a healthy BMI range." data-bn="একটি স্বাস্থ্যকর BMI রেঞ্জ বজায় রাখুন।">Maintain a healthy BMI range.</li>
+        <li data-en="Avoid smoking and limit alcohol." data-bn="ধূমপান এড়িয়ে চলুন এবং অ্যালকোহল সীমিত করুন।">Avoid smoking and limit alcohol.</li>
+        <li data-en="Eat a balanced diet with whole grains." data-bn="সম্পূর্ণ শস্যযুক্ত সুষম খাবার খান।">Eat a balanced diet with whole grains.</li>
+        <li data-en="Get regular checkups with your doctor." data-bn="নিয়মিত ডাক্তারের সাথে চেকআপ করুন।">Get regular checkups with your doctor.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Hidden report container for PDF generation with Bangla support -->
+  <div id="pdfReport" style="display: none; position: absolute; left: -9999px;">
+    <div style="font-family: Arial, sans-serif; padding: 20px; width: 800px;">
+      <h1 id="pdfReportTitle" style="font-size: 20px; margin-bottom: 20px;"></h1>
+      <div id="pdfReportContent">
+        <!-- Content will be dynamically added here -->
+      </div>
+    </div>
+  </div>
+
+  <div class="developer-signature">
+    <span data-en="Dev: Abir Alam" data-bn="ডেভ: আবির আলম">Dev: Abir Alam</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/><path d="M1.9 12h20.2"/></svg>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
