@@ -412,12 +412,20 @@ form {
   border-radius: 5px;
 }
 
+.normal-bp-reference span {
+  font-weight: bold;
+  font-size: 11px;
+  display: block;
+  margin-bottom: 5px;
+}
+
 .normal-bp-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 8px;
   font-family: Arial, sans-serif;
   font-size: 10px;
+  border: 1px solid #ddd;
 }
 
 .normal-bp-table th, .normal-bp-table td {
@@ -427,14 +435,18 @@ form {
 }
 
 .normal-bp-table th {
-  background-color: rgba(39, 174, 96, 0.2);
+  background-color: rgba(178, 223, 199, 0.7);
   font-weight: bold;
 }
 
+.normal-bp-table tr {
+  background-color: #ffffff;
+}
+
 .normal-bp-table tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: #ffffff;
 }
 
 .normal-bp-table tr:hover {
-  background-color: rgba(39, 174, 96, 0.1);
+  background-color: rgba(178, 223, 199, 0.2);
 } 
