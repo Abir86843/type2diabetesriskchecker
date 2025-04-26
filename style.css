@@ -1,0 +1,32 @@
+/* Add styles for blood pressure reference table */
+.bp-reference {
+  margin-top: 15px;
+  font-size: 0.9em;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+}
+
+.bp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+.bp-table th, .bp-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.bp-table th {
+  background-color: rgba(39, 174, 96, 0.2);
+}
+
+.bp-table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.bp-table tr:hover {
+  background-color: rgba(39, 174, 96, 0.1);
+} 

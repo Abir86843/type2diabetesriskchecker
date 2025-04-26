@@ -202,9 +202,8 @@ function calculateScore() {
   const ageElement = document.querySelector('input[name="age"]:checked');
   if (ageElement) {
     const age = ageElement.value;
-    if (age === '40-49') score += 1; 
-    if (age === '50-59') score += 2; 
-    if (age === '60+') score += 3;
+    if (age === '40-59') score += 1; 
+    if (age === '60+') score += 2;
   }
   
   // Family history
