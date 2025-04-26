@@ -189,11 +189,13 @@ form {
   margin-bottom: 0.2rem; 
 }
 
-.note { 
-  font-size: 0.9rem; 
-  font-style: italic; 
-  margin: 0 0 0.3rem 0; 
-  color: #555; 
+/* Make bracketed text (notes) font size 10px */
+.note {
+  font-size: 10px;
+  font-style: italic;
+  margin: 0 0 0.3rem 0;
+  color: #555;
+  font-family: Arial, sans-serif;
 }
 
 .options { 
