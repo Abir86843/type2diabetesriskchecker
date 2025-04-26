@@ -186,6 +186,7 @@ function calculateScore() {
   // Gender
   const genderElement = document.querySelector('input[name="gender"]:checked');
   if (genderElement && genderElement.value === 'male') score += 1;
+  if (genderElement && genderElement.value === 'third') score += 0.5; // Third gender gets 0.5 risk points
   
   // Female-specific questions
   if (genderElement && genderElement.value === 'female') {
