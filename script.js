@@ -623,4 +623,15 @@ function toggleSymptomQuestions(action) {
       input.checked = false;
     });
   }
+}
+
+// Function to toggle blood pressure reference table
+function toggleBPTable(action) {
+  const bpTable = document.getElementById('bpReferenceTable');
+  
+  if (action === 'show') {
+    bpTable.style.display = 'block';
+  } else {
+    bpTable.style.display = 'none';
+  }
 } 

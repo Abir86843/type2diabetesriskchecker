@@ -108,12 +108,12 @@
       <p data-en="Blood Pressure" data-bn="রক্তচাপ">Blood Pressure</p>
       <div class="note" data-en="(Having high blood pressure contributes to your risk)" data-bn="(উচ্চ রক্তচাপ আপনার ঝুঁকিতে অবদান রাখে)">(Having high blood pressure contributes to your risk)</div>
       <div class="options">
-        <label><input type="radio" name="bp" value="low" required><span data-en="Low" data-bn="কম">Low</span></label>
-        <label><input type="radio" name="bp" value="normal"><span data-en="Normal" data-bn="স্বাভাবিক">Normal</span></label>
-        <label><input type="radio" name="bp" value="high"><span data-en="High" data-bn="বেশি">High</span></label>
-        <label><input type="radio" name="bp" value="unknown"><span data-en="I do not know" data-bn="আমি জানি না">I do not know</span></label>
+        <label><input type="radio" name="bp" value="low" required onclick="toggleBPTable('show')"><span data-en="Low" data-bn="কম">Low</span></label>
+        <label><input type="radio" name="bp" value="normal" onclick="toggleBPTable('show')"><span data-en="Normal" data-bn="স্বাভাবিক">Normal</span></label>
+        <label><input type="radio" name="bp" value="high" onclick="toggleBPTable('show')"><span data-en="High" data-bn="বেশি">High</span></label>
+        <label><input type="radio" name="bp" value="unknown" onclick="toggleBPTable('hide')"><span data-en="I do not know" data-bn="আমি জানি না">I do not know</span></label>
       </div>
-      <div class="bp-reference">
+      <div id="bpReferenceTable" class="bp-reference" style="display: none;">
         <span style="font-family: Arial, sans-serif; font-size: 10px; font-weight: bold;" data-en="Range of Normal Blood Pressure (mm Hg)" data-bn="স্বাভাবিক রক্তচাপের পরিসর (মিমি এইচজি)">Range of Normal Blood Pressure (mm Hg)</span>
         <table class="normal-bp-table">
           <tr>
