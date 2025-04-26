@@ -398,4 +398,43 @@ form {
   top: 0px;
   color: #007BFF;
   font-size: 16px;
+}
+
+.bp-table tr:hover {
+  background-color: rgba(39, 174, 96, 0.1);
+}
+
+/* Normal blood pressure reference table styles */
+.normal-bp-reference {
+  margin-top: 15px;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 5px;
+}
+
+.normal-bp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+}
+
+.normal-bp-table th, .normal-bp-table td {
+  border: 1px solid #ddd;
+  padding: 6px;
+  text-align: center;
+}
+
+.normal-bp-table th {
+  background-color: rgba(39, 174, 96, 0.2);
+  font-weight: bold;
+}
+
+.normal-bp-table tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.normal-bp-table tr:hover {
+  background-color: rgba(39, 174, 96, 0.1);
 } 

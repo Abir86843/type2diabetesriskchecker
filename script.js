@@ -131,7 +131,7 @@ function validateForm() {
   
   if (unselectedGroups.length > 0) {
     if (currentLang === 'en') {
-      alert("⚠️ Please select an option for all required questions.");
+    alert("⚠️ Please select an option for all required questions.");
     } else {
       alert("⚠️ অনুগ্রহ করে সমস্ত প্রয়োজনীয় প্রশ্নের জন্য একটি বিকল্প নির্বাচন করুন।");
     }
@@ -141,7 +141,7 @@ function validateForm() {
   // Check for other required fields
   if (!form.checkValidity()) { 
     if (currentLang === 'en') {
-      alert("⚠️ Please fill all the required fields.");
+    alert("⚠️ Please fill all the required fields."); 
     } else {
       alert("⚠️ অনুগ্রহ করে সমস্ত প্রয়োজনীয় ক্ষেত্র পূরণ করুন।");
     }
@@ -174,7 +174,7 @@ function calculateBMI() {
   
   // Set the BMI result text with appropriate language
   if (currentLang === 'en') {
-    document.getElementById('bmiResult').innerText = `BMI: ${bmi.toFixed(1)} — ${category}`;
+  document.getElementById('bmiResult').innerText = `BMI: ${bmi.toFixed(1)} — ${category}`;
   } else {
     document.getElementById('bmiResult').innerText = `বিএমআই: ${bmi.toFixed(1)} — ${category}`;
   }
@@ -304,18 +304,18 @@ function showResult() {
   
   // Adjust text based on who the test is for
   if (currentLang === 'en') {
-    if (whoValue === 'other' && personName) {
-      resultText = resultText.replace("You're", `${personName} is`);
-      resultDesc = resultDesc.replace("Keep", `${personName} should keep`);
-      resultDesc = resultDesc.replace("Add", `${personName} should add`);
-      resultDesc = resultDesc.replace("Consult", `${personName} should consult`);
-    } else if (whoValue === 'other') {
-      resultText = resultText.replace("You're", "They're");
-      resultDesc = resultDesc.replace("Keep", "They should keep");
-      resultDesc = resultDesc.replace("Add", "They should add");
-      resultDesc = resultDesc.replace("Consult", "They should consult");
-    } else if (whoValue === 'self' && personName) {
-      resultText = resultText.replace("You're", `${personName}, you're`);
+  if (whoValue === 'other' && personName) {
+    resultText = resultText.replace("You're", `${personName} is`);
+    resultDesc = resultDesc.replace("Keep", `${personName} should keep`);
+    resultDesc = resultDesc.replace("Add", `${personName} should add`);
+    resultDesc = resultDesc.replace("Consult", `${personName} should consult`);
+  } else if (whoValue === 'other') {
+    resultText = resultText.replace("You're", "They're");
+    resultDesc = resultDesc.replace("Keep", "They should keep");
+    resultDesc = resultDesc.replace("Add", "They should add");
+    resultDesc = resultDesc.replace("Consult", "They should consult");
+  } else if (whoValue === 'self' && personName) {
+    resultText = resultText.replace("You're", `${personName}, you're`);
     }
   } else if (currentLang === 'bn') {
     if (whoValue === 'other' && personName) {
@@ -359,7 +359,7 @@ function toggleTips() {
 function preparePDFContent() {
   if (!validateForm()) return false;
   
-  calculateBMI();
+  calculateBMI(); 
   const rawScore = calculateScore();
   
   // Format score based on language
@@ -376,7 +376,7 @@ function preparePDFContent() {
   const personName = document.getElementById('otherPersonName').value.trim();
   
   if (personName) {
-    testFor += ` (${personName})`;
+      testFor += ` (${personName})`;
   }
   
   // Create field labels based on current language
@@ -482,7 +482,7 @@ function preparePDFContent() {
   table.style.borderCollapse = 'collapse';
   table.style.marginBottom = '20px';
   
-  for (const [key, val] of Object.entries(formData)) {
+  for (const [key, val] of Object.entries(formData)) { 
     const row = document.createElement('tr');
     
     const labelCell = document.createElement('td');
