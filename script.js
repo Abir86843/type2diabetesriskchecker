@@ -551,6 +551,7 @@ window.downloadPDF = function() {
       element.style.display = 'none'; // Hide it again
       
       const imgData = canvas.toDataURL('image/png');
+      // Create PDF with A4 size, portrait orientation
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -559,13 +560,40 @@ window.downloadPDF = function() {
       
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
+      
+      // Convert 1 inch to mm (25.4mm = 1 inch)
+      const margin = 25.4;
+      
+      // Calculate available content area with margins
+      const contentWidth = pdfWidth - (2 * margin);
+      const contentHeight = pdfHeight - (2 * margin);
+      
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 10;
       
+      // Calculate ratio to fit within available area
+      const ratio = Math.min(contentWidth / imgWidth, contentHeight / imgHeight);
+      
+      // Center the image horizontally within the margins
+      const imgX = margin + (contentWidth - imgWidth * ratio) / 2;
+      // Position at top margin
+      const imgY = margin;
+      
+      // Add footer text
+      const footerFontSize = 10;
+      pdf.setFontSize(footerFontSize);
+      
+      // Add left footer - Developed by Abir Alam
+      pdf.text('Developed by Abir Alam', margin, pdfHeight - margin / 2);
+      
+      // Add right footer - Website
+      const websiteText = 'Website: https://abir86843.github.io/type2diabetesriskchecker/';
+      const textWidth = pdf.getStringUnitWidth(websiteText) * footerFontSize / pdf.internal.scaleFactor;
+      pdf.text(websiteText, pdfWidth - margin - textWidth, pdfHeight - margin / 2);
+      
+      // Add the content image
       pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      
       pdf.save(translations[currentLang].pdfFilename);
     }).catch(error => {
       console.error('PDF generation error:', error);
