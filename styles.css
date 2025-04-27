@@ -126,17 +126,7 @@ header {
 .rainbow-text {
   font-size: 2rem; 
   font-weight: 700;
-  background: linear-gradient(270deg, red, orange, yellow, green, blue, indigo, violet);
-  background-size: 1400% 1400%;
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent;
-  animation: rainbow 5s ease infinite;
-}
-
-@keyframes rainbow { 
-  0% {background-position:0% 50%} 
-  50% {background-position:100% 50%} 
-  100% {background-position:0% 50%} 
+  color: #007BFF;
 }
 
 .subtitle { 
